@@ -66,7 +66,7 @@ de la somme totale. L'autre moitié sera payée le jour même.
 NB: On considère que chaque chambre est pour 1 personne, on ne tient donc pas en compte
 la notion de capacité des chambres
 
-NB: On ne prend pas en compte le stock des chambres
+NB: On ne prend pas en compte le stock des chambres.
 
 #### Confirmer une réservation
 
@@ -75,11 +75,16 @@ Le client doit payer l'autre moitié de la réservation pour la confirmer.
 NB: On ne considère pas la date de check-in ici, ce n'est pas grave si la confirmation est faite après la date de
 check-in
 
+#### Annuler une réservation
+
+Le client peut annuler sa réservation, qu'elle soit effectuée ou confirmée. Auquel cas, il n'est PAS remboursé par
+l'hôtel.
+
 # Rendu
 
 ### Design stratégique [5 pts]
 
-- `Ubiquitous language`: lister des concepts métiers et leurs définitions
+- `Ubiquitous language`: lister les concepts métiers et leurs définitions
 - `Bounded contexts`: créer un schéma représentant l'ensemble des contextes du métier
 - `Context maps`: compléter le schéma des contextes bornés avec les relations entre les contextes
 - `Core/Supporting/Generic domains`: identifier les domaine cœur, secondaires et generiques de votre système
@@ -107,3 +112,28 @@ check-in
 - Commencer par coder le domaine, puis la base de données, puis l'interface.
 C'est la partie domaine qui est la plus importante dans ce module.
 - Dans le domaine lui-même, d'abord se focaliser sur le "core domain", avant d'attaquer le reste
+
+# Rappels du cours
+
+## Comment architecturer le code?
+
+![hexagonal-architecture](images/hexagonal-architecture.png)
+
+Un package `domain`, avec les dépendances qui gravitent autour
+
+## Comment identifier les core/supporting/generic domains?
+
+![core-domain-chart](images/core-domain-chart.jpg)
+
+- Core domain = Qu’est-ce qui apporte de la valeur à notre application? Qu'est-ce qui nous sépare de la concurrence?
+- Supporting domain = Ce dont a besoin le core domain pour fonctionner
+- Generic domain = les parties "génériques" de l'application, qui peuvent être utilisées dans d'autres systèmes
+
+Prenons par exemple un site e-commerce qui vend des… accessoires de musculation.
+
+Core Domain : Produits mis en vente, calculateur de prise de poids, simulateur de gain musculaire…
+
+Support Domain : Abonnements, livraison, support client…
+
+Generic Domain : Gestion des utilisateurs, autorisations, paiement, emails…
+
