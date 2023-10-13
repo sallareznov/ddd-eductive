@@ -137,3 +137,14 @@ Support Domain : Abonnements, livraison, support client…
 
 Generic Domain : Gestion des utilisateurs, autorisations, paiement, emails…
 
+
+```plantuml
+@startuml
+usecase context1
+usecase context2
+usecase context3
+
+context1 -> context2: uses
+context1 -> context3: uses
+@enduml
+````
