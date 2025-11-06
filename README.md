@@ -7,7 +7,7 @@ elle a réussi à être performante avec un système de réservations sur papier
 renommée, l'entreprise souhaiterait se moderniser en
 informatisant son système de gestion de réservations.
 
-## Fonctionnalités
+## Fonctionnalités client
 
 #### Créer son compte
 
@@ -66,7 +66,7 @@ de la somme totale. L'autre moitié sera payée le jour même.
 NB: On considère que chaque chambre est pour 1 personne, on ne tient donc pas en compte
 la notion de capacité des chambres
 
-NB: On ne prend pas en compte le stock des chambres.
+NB: On prend en compte le stock des chambres.
 
 #### Confirmer une réservation
 
@@ -80,6 +80,15 @@ check-in
 Le client peut annuler sa réservation, qu'elle soit effectuée ou confirmée. Auquel cas, il n'est PAS remboursé par
 l'hôtel.
 
+## Fonctionnalités admin
+
+(Nous considérons qu'il n'y a qu'un seul compte admin dans toute la plateforme)
+
+Un admin doit pouvoir:
+- visualiser le nombre de chambres occupées et disponibles
+- afficher l'historique des réservations pour chaque chambre
+
+
 # Rendu
 
 ### Design stratégique [5 pts]
@@ -87,7 +96,6 @@ l'hôtel.
 - `Ubiquitous language`: lister les concepts métiers et leurs définitions
 - `Bounded contexts`: créer un schéma représentant l'ensemble des contextes du métier
 - `Context maps`: compléter le schéma des contextes bornés avec les relations entre les contextes
-- `Core/Supporting/Generic domains`: identifier les domaine cœur, secondaires et generiques de votre système
 
 ### Design tactique [15 pts]
 
@@ -99,11 +107,10 @@ l'hôtel.
   - le système ne DOIT PAS représenter d'états invalides
   - les signatures de fonctions (et des constructeurs de classes) ne doivent pas mentir. Elles doivent être explicites
   notamment sur les cas d'erreurs potentielles
-- Implémenter la partie database, avec la base de données de votre choix entre:
+- Implémenter la partie database, avec:
   - un fichier texte
-  - une base de données en mémoire H2
   - une base de données dans un container Docker (PostgreSQL, MySQL, MongoDB...)
-- Implémenter la partie infrastructure, qui sera au choix soit:
+- Implémenter la partie infrastructure avec:
   - un programme en ligne de commande
   - une API HTTP
 
@@ -111,7 +118,6 @@ l'hôtel.
 
 - Commencer par coder le domaine, puis la base de données, puis l'interface.
 C'est la partie domaine qui est la plus importante dans ce module.
-- Dans le domaine lui-même, d'abord se focaliser sur le "core domain", avant d'attaquer le reste
 
 # Rappels du cours
 
@@ -120,31 +126,3 @@ C'est la partie domaine qui est la plus importante dans ce module.
 ![hexagonal-architecture](images/hexagonal-architecture.png)
 
 Un package `domain`, avec les dépendances qui gravitent autour
-
-## Comment identifier les core/supporting/generic domains?
-
-![core-domain-chart](images/core-domain-chart.jpg)
-
-- Core domain = Qu’est-ce qui apporte de la valeur à notre application? Qu'est-ce qui nous sépare de la concurrence?
-- Supporting domain = Ce dont a besoin le core domain pour fonctionner
-- Generic domain = les parties "génériques" de l'application, qui peuvent être utilisées dans d'autres systèmes
-
-Prenons par exemple un site e-commerce qui vend des… accessoires de musculation.
-
-Core Domain : Produits mis en vente, calculateur de prise de poids, simulateur de gain musculaire…
-
-Support Domain : Abonnements, livraison, support client…
-
-Generic Domain : Gestion des utilisateurs, autorisations, paiement, emails…
-
-
-```plantuml
-@startuml
-usecase context1
-usecase context2
-usecase context3
-
-context1 -> context2: uses
-context1 -> context3: uses
-@enduml
-````
